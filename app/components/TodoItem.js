@@ -1,90 +1,79 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import TodoTextInput from './TodoTextInput';
 import style from './TodoItem.css';
 
 export default class TodoItem extends Component {
 
   static propTypes = {
-    todo: PropTypes.object.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    completeTodo: PropTypes.func.isRequired
+    data: PropTypes.object.isRequired,
   };
 
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      editing: false
-    };
+    this.state = {};
   }
 
-  handleDoubleClick = () => {
-    this.setState({ editing: true });
-  };
+  componentDidMount() {
+    chrome.tabs.getSelected(null, (tab) => { this.url = tab.url; });
+  }
 
-  handleSave = (text) => {
-    const { todo, deleteTodo, editTodo } = this.props;
-    if (text.length === 0) {
-      deleteTodo(todo.id);
-    } else {
-      editTodo(todo.id, text);
+  url = ''
+
+  handleClick = (data) => {
+    const { value } = data;
+    chrome.cookies.set({
+      url: this.url,
+      name: 'wpt_env_num',
+      value: `env_0${value}`,
+      domain: '.weipaitang.com'
+    });
+  }
+
+
+  // cookie 切换
+  cookie = {
+    get(name) {
+      const cookieObj = {};
+      if (document.cookie.length !== 0) {
+        document.cookie.split(';').map((item) => {
+          const key = item.split('=')[0].trim();
+          let value;
+          try {
+            value = JSON.parse(item.split('=')[1]);
+          } catch (e) {
+            value = item.split('=')[1];
+          }
+          cookieObj[key] = value;
+        });
+      }
+      return name ? cookieObj[name] : cookieObj;
+    },
+    set(name, value, config = { path: '/' }) {
+      const newConfig = Object.assign({ [name]: value }, config);
+      const configStr = [...Object.keys(newConfig)].map(key => `${key}=${newConfig[key]}`).join(' ;');
+      document.cookie = configStr;
+    },
+    remove(name) {
+      this.set(name, '', { expires: new Date(0), path: '/' });
+    },
+    clear() {
+      const cookieObj = this.get();
+      Object.keys(cookieObj).map(cookieItem => this.remove(cookieItem));
     }
-    this.setState({ editing: false });
-  };
-
-  handleComplete = () => {
-    const { todo, completeTodo } = this.props;
-    completeTodo(todo.id);
-  };
-
-  handleDelete = () => {
-    const { todo, deleteTodo } = this.props;
-    deleteTodo(todo.id);
-  };
+  }
 
   render() {
-    const { todo } = this.props;
-
-    let element;
-    if (this.state.editing) {
-      element = (
-        <TodoTextInput
-          text={todo.text}
-          editing={this.state.editing}
-          onSave={this.handleSave}
-        />
-      );
-    } else {
-      element = (
-        <div className={style.view}>
-          <input
-            className={style.toggle}
-            type="checkbox"
-            checked={todo.completed}
-            onChange={this.handleComplete}
-          />
-          <label onDoubleClick={this.handleDoubleClick}>
-            {todo.text}
-          </label>
-          <button
-            className={style.destroy}
-            onClick={this.handleDelete}
-          />
-        </div>
-      );
-    }
-
+    const { data } = this.props;
     return (
-      <li
-        className={classnames({
-          [style.completed]: todo.completed,
-          [style.editing]: this.state.editing,
-          [style.normal]: !this.state.editing
-        })}
-      >
-        {element}
+      <li >
+        <div className={style.view}>
+          <button onClick={() => this.handleClick(data)}>
+            <label>
+              {data.label}
+            </label>
+          </button>
+        </div>
       </li>
     );
   }
 }
+

@@ -31,7 +31,7 @@
 }
 
 .normal .destroy {
-  display: none;
+  /* display: none;
   position: absolute;
   top: 0;
   right: 10px;
@@ -42,19 +42,19 @@
   font-size: 30px;
   color: #cc9a9a;
   margin-bottom: 11px;
-  transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out; */
 }
 
 .normal .destroy:hover {
-  color: #af5b5e;
+  /* color: #af5b5e; */
 }
 
 .normal .destroy:after {
-  content: '×';
+  /* content: '×'; */
 }
 
 .normal:hover .destroy {
-  display: block;
+  /* display: block; */
 }
 
 .normal .edit {
@@ -85,6 +85,15 @@
 .completed label {
   color: #d9d9d9;
   text-decoration: line-through;
+}
+
+.view {
+  height: 40px;
+  display: grid;
+}
+
+.view button {
+  
 }
 
 /*

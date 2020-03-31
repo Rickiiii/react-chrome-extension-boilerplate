@@ -13,6 +13,7 @@
 .todoList li {
   position: relative;
   font-size: 24px;
+  height: 40px;
   border-bottom: 1px solid #ededed;
 }
 
@@ -32,8 +33,9 @@
   margin: 0 0 0 43px;
 }
 
-.todoList li.editing .view {
-  display: none;
+.view {
+    height: 40px;
+    display: grid;
 }
 
 .todoList li .toggle {
@@ -59,13 +61,9 @@
 }
 
 .todoList li label {
-  white-space: pre-line;
-  word-break: break-all;
-  padding: 15px 60px 15px 15px;
-  margin-left: 45px;
+  line-height: 40px;
+  text-align: center;
   display: block;
-  line-height: 1.2;
-  transition: color 0.4s;
 }
 
 .todoList li.completed label {
@@ -74,7 +72,7 @@
 }
 
 .todoList li .destroy {
-  display: none;
+  /* display: none;
   position: absolute;
   top: 0;
   right: 10px;
@@ -85,23 +83,23 @@
   font-size: 30px;
   color: #cc9a9a;
   margin-bottom: 11px;
-  transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out; */
 }
 
 .todoList li .destroy:hover {
-  color: #af5b5e;
+  /* color: #af5b5e; */
 }
 
 .todoList li .destroy:after {
-  content: '×';
+  /* content: '×'; */
 }
 
 .todoList li:hover .destroy {
-  display: block;
+  /* display: block; */
 }
 
 .todoList li .edit {
-  display: none;
+  /* display: none; */
 }
 
 .todoList li.editing:last-child {

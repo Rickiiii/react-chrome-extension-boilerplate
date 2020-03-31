@@ -25,9 +25,10 @@ export default class App extends Component {
     const { todos, actions } = this.props;
 
     return (
-      <div className={style.normal}>
-        <Header addTodo={actions.addTodo} />
-        <MainSection todos={todos} actions={actions} />
+      <div>
+        <Header />
+        {/* <Menu /> */}
+        <MainSection />
       </div>
     );
   }

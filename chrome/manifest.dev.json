@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "Example for react-chrome-extension-boilerplate",
   "browser_action": {
-    "default_title": "React Chrome Extension Example",
+    "default_title": "微拍堂小工具",
     "default_popup": "popup.html"
   },
   "icons": {
@@ -18,6 +18,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "contextMenus", "management", "tabs", "storage", "https://github.com/*" ],
+  "permissions": [ "cookies","*://*.google.com","*://*.weipaitang.com","http://*/*", "https://*/*","contextMenus", "management", "tabs", "storage", "https://github.com/*" ],
   "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }

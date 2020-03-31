@@ -27,7 +27,7 @@ function popWindow(type) {
 
 chrome.contextMenus.create({
   id: CONTEXT_MENU_ID,
-  title: 'React Chrome Extension Example',
+  title: '微拍堂工具',
   contexts: ['all'],
   documentUrlPatterns: [
     'https://github.com/*'
