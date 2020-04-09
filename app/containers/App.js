@@ -1,34 +1,55 @@
-import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import MainSection from '../components/MainSection';
-import * as TodoActions from '../actions/todos';
-import style from './App.css';
+import ChangeEnv from '../components/ChangeEnv';
+import QRCode from '../components/qrCode';
+import './App.css';
 
-@connect(
-  state => ({
-    todos: state.todos
-  }),
-  dispatch => ({
-    actions: bindActionCreators(TodoActions, dispatch)
-  })
-)
+const menu = [{
+  label: '切环境',
+  value: 'env',
+  components: <ChangeEnv />
+}, {
+  label: '二维码',
+  value: 'qrcode',
+  components: <QRCode />
+}];
+
+@connect()
 export default class App extends Component {
 
-  static propTypes = {
-    todos: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
-  };
+  state = {
+    chooseIndex: 'env'
+  }
 
   render() {
-    const { todos, actions } = this.props;
-
+    const { chooseIndex } = this.state;
     return (
       <div>
-        <Header />
+        {/* <Header /> */}
         {/* <Menu /> */}
-        <MainSection />
+        {/* <ChangeEnv /> */}
+        {/* <QRCode /> */}
+        <div className="ui grid" style={{ display: 'flex' }}>
+          <div className="four wide column">
+            <div className="ui vertical fluid tabular menu">
+              {menu.map(item => (
+                <a className={item.value === chooseIndex ? 'item active' : 'item'} onClick={() => this.setState({ chooseIndex: item.value })}>{item.label}</a>
+              ))}
+            </div>
+          </div>
+          <div className="twelve wide stretched column">
+            <div className="ui segment">
+              {
+                menu.map((item) => {
+                  if (item.value === chooseIndex) {
+                    return item.components;
+                  }
+                })
+              }
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

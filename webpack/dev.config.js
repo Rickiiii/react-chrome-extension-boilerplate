@@ -64,7 +64,24 @@ const baseDevConfig = () => ({
           }
         }
       ]
-    }]
+    }],
+    loaders: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015'],
+          plugins: [
+            ['import', { libraryName: 'antd', style: 'css' }] //按需加载
+          ]
+        },
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      },
+    ]
   }
 });
 
